@@ -1,3 +1,18 @@
+# Inyectamos el Secret con las credenciales de AWS
+extraEnvFrom:
+- secretRef:
+    name: s3-credentials # Secret con AWS_ACCESS_KEY_ID y AWS_SECRET_ACCESS_KEY
+
+# Configuración del almacenamiento
+storage:
+  backend: s3
+  s3:
+    bucket: mimir-metrics1 # <-- crea este bucket en AWS
+    endpoint: s3.us-east-1.amazonaws.com
+    region: us-east-1
+    insecure: false
+
+# Deshabilitamos persistencia local ya que usamos S3
 persistence:
   enabled: false
 
@@ -21,6 +36,7 @@ storegateway:
   persistence:
     enabled: false
 
+# Recursos
 resources:
   requests:
     cpu: 200m
@@ -28,4 +44,6 @@ resources:
   limits:
     cpu: 500m
     memory: 1Gi
+
+# Réplicas
 replicaCount: 1

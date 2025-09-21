@@ -2,16 +2,16 @@ tempo:
   # Inyectamos el Secret con las credenciales de AWS
   extraEnvFrom:
   - secretRef:
-      name: s3-credentials
+      name: s3-credentials # el Secret que creaste en el namespace de Tempo
 
   storage:
     trace:
       backend: s3
       s3:
-        bucket: otel-demo-bucket1
-        endpoint: s3.amazonaws.com
+        bucket: tempo-trac3 # <- tu bucket existente
+        endpoint: s3.us-east-1.amazonaws.com
         region: us-east-1
-        # Ya no ponemos access_key ni secret_key hardcodeados
+        # Las credenciales se toman del Secret, no se hardcodea
         insecure: false
 
   compactor:
