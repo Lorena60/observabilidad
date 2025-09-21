@@ -1,0 +1,23 @@
+# argo-apps/mimir-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mimir
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/Lorena60/observabilidad.git'
+    targetRevision: main
+    path: mimir-distributed
+    helm:
+      valueFiles:
+      - values.yaml
+      - values-mimir.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: mimir
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

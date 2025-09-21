@@ -2,7 +2,7 @@ global:
   # -- Common labels for all object directly managed by this chart.
   commonLabels: {}
 
-# -- Overrides the chart's name
+# -- Overrides the cfhart's name
 nameOverride: ""
 
 # -- Overrides the chart's computed fullname
@@ -166,41 +166,41 @@ tempo:
   #   readOnly: true
   #   existingClaim: volume-claim
 
-# -- Tempo configuration file contents
-# @default -- Dynamically generated tempo configmap
+  # -- Tempo configuration file contents
+  # @default -- Dynamically generated tempo configmap
 config: |
-    memberlist:
-      cluster_label: "{{ .Release.Name }}.{{ .Release.Namespace }}"
-    multitenancy_enabled: {{ .Values.tempo.multitenancyEnabled }}
-    usage_report:
-      reporting_enabled: {{ .Values.tempo.reportingEnabled }}
-    compactor:
-      compaction:
-        block_retention: {{ .Values.tempo.retention }}
-    distributor:
-      receivers:
-        {{- toYaml .Values.tempo.receivers | nindent 8 }}
-    ingester:
-      {{- toYaml .Values.tempo.ingester | nindent 6 }}
-    server:
-      {{- toYaml .Values.tempo.server | nindent 6 }}
-    storage:
-      {{- toYaml .Values.tempo.storage | nindent 6 }}
-    querier:
-      {{- toYaml .Values.tempo.querier | nindent 6 }}
-    query_frontend:
-      {{- toYaml .Values.tempo.queryFrontend | nindent 6 }}
-    overrides:
-      {{- toYaml .Values.tempo.overrides | nindent 6 }}
-      {{- if .Values.tempo.metricsGenerator.enabled }}
-    metrics_generator:
-          storage:
-            path: "/tmp/tempo"
-            remote_write:
-              - url: {{ .Values.tempo.metricsGenerator.remoteWriteUrl }}
-          traces_storage:
-            path: "/tmp/traces"
-      {{- end }}
+  memberlist:
+    cluster_label: "{{ .Release.Name }}.{{ .Release.Namespace }}"
+  multitenancy_enabled: {{ .Values.tempo.multitenancyEnabled }}
+  usage_report:
+    reporting_enabled: {{ .Values.tempo.reportingEnabled }}
+  compactor:
+    compaction:
+      block_retention: {{ .Values.tempo.retention }}
+  distributor:
+    receivers:
+      {{- toYaml .Values.tempo.receivers | nindent 8 }}
+  ingester:
+    {{- toYaml .Values.tempo.ingester | nindent 6 }}
+  server:
+    {{- toYaml .Values.tempo.server | nindent 6 }}
+  storage:
+    {{- toYaml .Values.tempo.storage | nindent 6 }}
+  querier:
+    {{- toYaml .Values.tempo.querier | nindent 6 }}
+  query_frontend:
+    {{- toYaml .Values.tempo.queryFrontend | nindent 6 }}
+  overrides:
+    {{- toYaml .Values.tempo.overrides | nindent 6 }}
+    {{- if .Values.tempo.metricsGenerator.enabled }}
+  metrics_generator:
+        storage:
+          path: "/tmp/tempo"
+          remote_write:
+            - url: {{ .Values.tempo.metricsGenerator.remoteWriteUrl }}
+        traces_storage:
+          path: "/tmp/traces"
+    {{- end }}
 
 tempoQuery:
   repository: grafana/tempo-query
@@ -235,7 +235,7 @@ tempoQuery:
     pathType: Prefix
 
     hosts:
-      - query.tempo.example.com
+    - query.tempo.example.com
     ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
     extraPaths: []
     # - path: /*
@@ -307,8 +307,8 @@ service:
   type: ClusterIP
   clusterIP: ""
   # -- (string) IP address, in case of 'type: LoadBalancer'
-  loadBalancerIP:
-  # -- If service type is LoadBalancer, the exposed protocol can either be "UDP", "TCP" or "UDP,TCP"
+  loadBalancerIP: # -- If service type is LoadBalancer, the exposed protocol can either be "UDP", "TCP" or "UDP,TCP"
+
   protocol: "TCP"
 
   annotations: {}
@@ -323,12 +323,11 @@ serviceMonitor:
   # scrapeTimeout: 10s
 
 persistence:
-  enabled: false
-    # -- Enable StatefulSetAutoDeletePVC feature
+  enabled: false # -- Enable StatefulSetAutoDeletePVC feature
   enableStatefulSetAutoDeletePVC: false
   # storageClassName: local-path
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   size: 10Gi
 
 # -- Pod Annotations
@@ -412,4 +411,4 @@ networkPolicy:
     ## to:
     ##  - namespaceSelector:
     ##    matchExpressions:
-  ##    - {key: role, operator: In, values: [tempo]}
+    ##    - {key: role, operator: In, values: [tempo]}

@@ -1,0 +1,31 @@
+persistence:
+  enabled: false
+
+minio:
+  persistence:
+    enabled: false
+
+alertmanager:
+  persistence:
+    enabled: false
+
+compactor:
+  persistence:
+    enabled: false
+
+ingester:
+  persistence:
+    enabled: false
+
+storegateway:
+  persistence:
+    enabled: false
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 1Gi
+replicaCount: 1
