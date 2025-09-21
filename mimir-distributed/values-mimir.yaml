@@ -11,14 +11,19 @@ storage:
     endpoint: s3.us-east-1.amazonaws.com
     region: us-east-1
     insecure: false
-
+blocks_storage:
+  backend: s3
+  s3:
+    bucket: mimir-metrics1
+    endpoint: s3.us-east-1.amazonaws.com
+    region: us-east-1
+    insecure: false
 # Deshabilitamos persistencia local ya que usamos S3
 persistence:
   enabled: false
 
 minio:
-  persistence:
-    enabled: false
+  enabled: false
 
 alertmanager:
   persistence:
