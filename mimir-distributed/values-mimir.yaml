@@ -27,7 +27,8 @@ minio:
 
 alertmanager:
   persistence:
-    enabled: false
+    enabled: true
+    storageClassName: standard
 
 compactor:
   persistence:
