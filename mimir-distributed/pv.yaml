@@ -1,13 +1,27 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: alertmanager-pv
+  name: mimir-alertmanager-pv
 spec:
   capacity:
-    storage: 1Gi             # Tamaño que necesites
+    storage: 1Gi
   accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
+  - ReadWriteOnce
   storageClassName: standard
   hostPath:
-    path: /mnt/data/alertmanager  # Ruta en el nodo donde se guardará la data
+    path: /mnt/data/mimir/alertmanager
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mimir-ruler-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: standard
+  hostPath:
+    path: /mnt/data/mimir/ruler
+  persistentVolumeReclaimPolicy: Retain

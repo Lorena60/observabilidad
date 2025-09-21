@@ -7,10 +7,11 @@ extraEnvFrom:
 storage:
   backend: s3
   s3:
-    bucket: mimir-metrics1 # <-- crea este bucket en AWS
+    bucket: mimir-metrics1
     endpoint: s3.us-east-1.amazonaws.com
     region: us-east-1
     insecure: false
+
 blocks_storage:
   backend: s3
   s3:
@@ -18,18 +19,30 @@ blocks_storage:
     endpoint: s3.us-east-1.amazonaws.com
     region: us-east-1
     insecure: false
-# Deshabilitamos persistencia local ya que usamos S3
+
+# Deshabilitamos persistencia local global ya que usamos S3
 persistence:
   enabled: false
 
+# Deshabilitamos MinIO local
 minio:
   enabled: false
 
+# Alertmanager: habilitamos persistencia con PVC
 alertmanager:
   persistence:
     enabled: true
     storageClassName: standard
+    size: 1Gi # tamaño del PVC
 
+# Ruler: habilitamos persistencia si queremos guardar reglas locales
+ruler:
+  persistence:
+    enabled: true
+    storageClassName: standard
+    size: 1Gi
+
+# Componentes que no requieren persistencia
 compactor:
   persistence:
     enabled: false
@@ -39,6 +52,14 @@ ingester:
     enabled: false
 
 storegateway:
+  persistence:
+    enabled: false
+
+queryFrontend:
+  persistence:
+    enabled: false
+
+querier:
   persistence:
     enabled: false
 
