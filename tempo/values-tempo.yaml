@@ -1,4 +1,9 @@
 tempo:
+  # Inyectamos el Secret con las credenciales de AWS
+  extraEnvFrom:
+  - secretRef:
+      name: s3-credentials
+
   storage:
     trace:
       backend: s3
@@ -6,8 +11,7 @@ tempo:
         bucket: tempo-traces
         endpoint: s3.amazonaws.com
         region: us-east-1
-        access_key: ${AWS_ACCESS_KEY_ID}
-        secret_key: ${AWS_SECRET_ACCESS_KEY}
+        # Ya no ponemos access_key ni secret_key hardcodeados
         insecure: false
 
   compactor:
