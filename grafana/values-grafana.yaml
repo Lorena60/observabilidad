@@ -1,11 +1,38 @@
-# argo-apps/values-grafana-demo.yaml
+# values-grafana-local.yaml
+
+replicaCount: 1
+
+image:
+  repository: grafana/grafana
+  tag: 10.3.2
+  pullPolicy: IfNotPresent
+
 persistence:
-  enabled: false
+  enabled: false # ❌ desactivamos persistencia para que no requiera PVC
 
 resources:
-  requests:
-    cpu: 100m
-    memory: 256Mi
   limits:
-    cpu: 250m
+    cpu: 500m
     memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+service:
+  type: ClusterIP
+  port: 3000
+
+adminUser: admin
+adminPassword: admin # puedes cambiarla luego por un secret
+
+ingress:
+  enabled: false # si quieres exponerlo desde localhost, puedes dejarlo false
+
+# Configuración mínima de dashboards y datasources para pruebas
+dashboards:
+  default:
+    enabled: true
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources: []
