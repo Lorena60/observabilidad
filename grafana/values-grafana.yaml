@@ -1,6 +1,5 @@
 serviceAccount:
-  create: false
-  name: grafana-sa
+  create: true
 
 sidecar:
   dashboards:
@@ -10,3 +9,6 @@ sidecar:
       disableDelete: false
       allowUiUpdates: true
     searchNamespace: ALL
+securityContext:
+  runAsUser: 1001
+  fsGroup: 1001
