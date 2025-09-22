@@ -1,7 +1,12 @@
-persistence:
-  enabled: true
-  type: pvc
-  storageClassName: standard
-  accessModes:
-  - ReadWriteOnce
-  size: 5Gi
+serviceAccount:
+  create: false
+  name: grafana-sa
+
+sidecar:
+  dashboards:
+    enabled: true
+    provider:
+      type: file
+      disableDelete: false
+      allowUiUpdates: true
+    searchNamespace: ALL
